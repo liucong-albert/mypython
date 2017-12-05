@@ -21,6 +21,7 @@ import urllib
 from urllib import request
 import re
 import xlwt
+import json
 
 url = 'https://cq.fang.lianjia.com/loupan/jiangbei/'
 request = urllib.request.urlopen(url)
@@ -42,8 +43,15 @@ for j,y in enumerate(data2):
 
 wbk.save('test.xls')
 
-c = re.compile('<div.*?page-data=(.*?) }></div>')
+c = re.compile('<div[^>]*class="page-box.*?house-lst-page-box"[^>]*?page-data=(.*?)>')
 data3 = c.findall(data)
-print(data3)
+if len(data3)>0:
+    d = re.compile('".*?":(\d)')
+    s = data3[0]
+    data4 = d.findall(s)
+    print(data4[0])
+    print(type(data4))
+
+
 
 
